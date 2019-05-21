@@ -28,8 +28,7 @@ public class Gra extends ApplicationAdapter {
 
 //		batch.draw(img, 0, 0);
 		batch.end();
-
-		renderer.begin();
+		renderer.begin(ShapeRenderer.ShapeType.Filled);
 		renderer.setColor(Color.GOLD);
 		renderer.rect(0, 0, 100, 100);
 		renderer.end();
@@ -39,5 +38,6 @@ public class Gra extends ApplicationAdapter {
 	public void dispose () {
 		batch.dispose();
 		img.dispose();
+		renderer.dispose();
 	}
 }
