@@ -7,6 +7,9 @@ import com.mygdx.game.Gra;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+		config.title = "Gra";
+		config.height = 800;
+		config.width = 600;
 		new LwjglApplication(new Gra(), config);
 	}
 }
