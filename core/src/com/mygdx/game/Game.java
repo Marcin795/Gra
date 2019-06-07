@@ -44,15 +44,18 @@ public class Game extends InputAdapter implements Screen {
 
 
     End end;
-    public Game(Gra gra){
+
+    String path;
+    public Game(Gra gra, String absolutePath){
         this.gra = gra;
+        this.path = absolutePath;
     }
 
     @Override
     public void show() {
 
         try {
-            FileInputStream input = new FileInputStream("surfacing.mp3");
+            FileInputStream input = new FileInputStream(path);
             player = new PausablePlayer(input);
 
             // start playing
@@ -95,7 +98,7 @@ public class Game extends InputAdapter implements Screen {
                     }
                 }
             }
-        }else if(Gdx.input.isKeyJustPressed(Input.Keys.S)||Gdx.input.isKeyJustPressed(Input.Keys.UP)){
+        }else if(Gdx.input.isKeyJustPressed(Input.Keys.S)||Gdx.input.isKeyJustPressed(Input.Keys.UP)||Gdx.input.isKeyJustPressed(Input.Keys.DOWN)){
             if(!balls.ballsList2.isEmpty()){
                 for(Ball ball:balls.ballsList2){
                     if(ball.position.dst(circles.k2.x,circles.k2.y)<50&&!ball.click) {
@@ -200,7 +203,6 @@ public class Game extends InputAdapter implements Screen {
 
         }
         else{
-
             if (worldTouch.dst(viewport.getWorldWidth()/2-Constants.WIDTH-Constants.SPACE,25) < 25) {
                 if (!balls.ballsList1.isEmpty()) {
                     for(Ball ball:balls.ballsList1){

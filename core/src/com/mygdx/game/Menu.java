@@ -4,15 +4,23 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import net.spookygames.gdx.nativefilechooser.NativeFileChooser;
+import net.spookygames.gdx.nativefilechooser.NativeFileChooserCallback;
+import net.spookygames.gdx.nativefilechooser.NativeFileChooserConfiguration;
+
+import java.io.File;
+import java.io.FilenameFilter;
 
 
 public class Menu extends InputAdapter implements Screen {
+    private final NativeFileChooser fileChooser;
     protected Gra gra;
     protected SpriteBatch batch;
     protected ExtendViewport viewport;
@@ -21,11 +29,11 @@ public class Menu extends InputAdapter implements Screen {
     BitmapFont font;
     Texture play,play1,ranking,ranking1;
 
+    String path;
 
-
-
-    public Menu(Gra gra){
+    public Menu(Gra gra, NativeFileChooser fileChooser){
         this.gra=gra;
+        this.fileChooser = fileChooser;
     }
 
     @Override
@@ -81,9 +89,9 @@ public class Menu extends InputAdapter implements Screen {
 
     @Override
     public void resize(int width, int height) {
-    viewport.update(width,height,true);
-    Gdx.app.log("MENU",viewport.getScreenHeight()+" "+viewport.getScreenWidth()+" ");
-    camera.update();
+        viewport.update(width,height,true);
+        Gdx.app.log("MENU",viewport.getScreenHeight()+" "+viewport.getScreenWidth()+" ");
+        camera.update();
     }
 
     @Override
@@ -105,7 +113,9 @@ public class Menu extends InputAdapter implements Screen {
 
     @Override
     public void dispose() {
-
+        batch.dispose();
+        font.dispose();
+        renderer.dispose();
     }
 
     @Override
@@ -117,8 +127,11 @@ public class Menu extends InputAdapter implements Screen {
                 Constants.SZER,
                 Constants.WYS);
         if(startRect.contains(worldTouch)) {
-            //gra.showChoiceScreen();
-            gra.showGameScreen();
+            Gdx.app.log("Menu", "asdf");
+//            gra.showChoiceScreen();
+//            gra.showGameScreen("E:\\Java\\lullaby.mp3");
+            chooseFile();
+            gra.showGameScreen(path);
         }
         Rectangle rankingRect = new Rectangle(Constants.RANKING_W.x/Constants.MENU_SIZE*viewport.getWorldWidth()-Constants.SZER/2,
                 Constants.RANKING_W.y/Constants.MENU_SIZE*viewport.getWorldHeight(),
@@ -131,5 +144,41 @@ public class Menu extends InputAdapter implements Screen {
         return true;
 
 
+    }
+
+    public void chooseFile() {
+
+        NativeFileChooserConfiguration conf = new NativeFileChooserConfiguration();
+        conf.directory = Gdx.files.absolute(System.getProperty("user.home"));
+        conf.mimeFilter = "audio/*";
+        conf.nameFilter = new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String name) {
+                return name.endsWith("mp3");
+            }
+        };
+        conf.title = "Choose audio file";
+        fileChooser.chooseFile(conf, new NativeFileChooserCallback() {
+            @Override
+            public void onFileChosen(FileHandle file) {
+                // Do stuff with file, yay!
+                Gdx.app.log("Choice", file.file().getAbsolutePath());
+                path = file.file().getAbsolutePath();
+            }
+
+            @Override
+            public void onCancellation() {
+                // Warn user how rude it can be to cancel developer's effort
+                Gdx.app.log("Choice", "To JEB SIE!!!");
+                Gdx.app.exit();
+            }
+
+            @Override
+            public void onError(Exception exception) {
+                // Handle error (hint: use exception type)
+                Gdx.app.log("Choice", "Huh?");
+                Gdx.app.exit();
+            }
+        });
     }
 }

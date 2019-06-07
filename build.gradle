@@ -38,6 +38,7 @@ allprojects {
         google()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+        maven { url "http://dl.bintray.com/spookygames/oss" }
     }
 }
 
@@ -52,6 +53,7 @@ project(":desktop") {
         compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
 
+        compile "net.spookygames.gdx:gdx-nativefilechooser-desktop:1.0.0"
 
         implementation 'com.googlecode.soundlibs:mp3spi:1.9.5.4'
         
@@ -74,6 +76,7 @@ project(":android") {
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86_64"
 
+        compile "net.spookygames.gdx:gdx-nativefilechooser-android:1.0.0"
 
         implementation 'com.googlecode.soundlibs:mp3spi:1.9.5.4'
 
@@ -110,6 +113,7 @@ project(":core") {
         compile group: 'javazoom', name: 'jlayer', version: '1.0.1'
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
 
+        compile "net.spookygames.gdx:gdx-nativefilechooser:1.0.0"
 
         implementation 'com.googlecode.soundlibs:mp3spi:1.9.5.4'
 
