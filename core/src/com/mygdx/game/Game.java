@@ -1,10 +1,7 @@
 package com.mygdx.game;
 
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.Preferences;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -26,6 +23,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 import java.awt.*;
+import java.security.Key;
 import java.util.Arrays;
 import java.util.Hashtable;
 
@@ -54,7 +52,7 @@ public class Game extends InputAdapter implements Screen {
     public void show() {
 
         try {
-            FileInputStream input = new FileInputStream("holiday.mp3");
+            FileInputStream input = new FileInputStream("surfacing.mp3");
             player = new PausablePlayer(input);
 
             // start playing
@@ -87,7 +85,38 @@ public class Game extends InputAdapter implements Screen {
 
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        if(Gdx.input.isKeyJustPressed(Input.Keys.A)||Gdx.input.isKeyJustPressed(Input.Keys.LEFT)){
+            if (!balls.ballsList1.isEmpty()) {
+                for(Ball ball:balls.ballsList1){
+                    if(ball.position.dst(circles.k1.x,circles.k1.y)<50&&!ball.click) {
+                        score += 10;
+                        ball.click = true;
+                        break;
+                    }
+                }
+            }
+        }else if(Gdx.input.isKeyJustPressed(Input.Keys.S)||Gdx.input.isKeyJustPressed(Input.Keys.UP)){
+            if(!balls.ballsList2.isEmpty()){
+                for(Ball ball:balls.ballsList2){
+                    if(ball.position.dst(circles.k2.x,circles.k2.y)<50&&!ball.click) {
+                        score += 10;
+                        ball.click = true;
+                        break;
+                    }
+                }
 
+            }
+        }if(Gdx.input.isKeyJustPressed(Input.Keys.D)||Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)){
+            if(!balls.ballsList3.isEmpty()) {
+                for(Ball ball:balls.ballsList3){
+                    if(ball.position.dst(circles.k3.x,circles.k3.y)<50&&!ball.click) {
+                        score += 10;
+                        ball.click = true;
+                        break;
+                    }
+                }
+            }
+        }
         balls.update(delta);
 
         renderer.begin();
@@ -171,6 +200,7 @@ public class Game extends InputAdapter implements Screen {
 
         }
         else{
+
             if (worldTouch.dst(viewport.getWorldWidth()/2-Constants.WIDTH-Constants.SPACE,25) < 25) {
                 if (!balls.ballsList1.isEmpty()) {
                     for(Ball ball:balls.ballsList1){
@@ -185,7 +215,7 @@ public class Game extends InputAdapter implements Screen {
 
             else if (worldTouch.dst(viewport.getWorldWidth()/2,25) < 25) {
 
-                Gdx.app.log("odl",balls.ballsList2+"");
+                //Gdx.app.log("odl",balls.ballsList2+"");
                 if(!balls.ballsList2.isEmpty()){
                     for(Ball ball:balls.ballsList2){
                         if(ball.position.dst(circles.k2.x,circles.k2.y)<50&&!ball.click) {
