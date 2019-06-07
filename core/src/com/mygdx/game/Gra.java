@@ -7,9 +7,13 @@ public class Gra extends Game {
     @Override
     public void create() {
         showStartScreen();
+
     }
     public void showStartScreen(){
+        //
         setScreen(new Menu(this));
+        //setScreen(new Choice(this));
+
     }
     public void showGameScreen(){
         setScreen(new com.mygdx.game.Game(this));
@@ -17,7 +21,9 @@ public class Gra extends Game {
     public void showRankingScreen(){
         setScreen(new Ranking(this));
     }
-    public void showScoreScreen(){
+    public void showChoiceScreen(){
+        setScreen(new Choice(this));
 
     }
+
 }

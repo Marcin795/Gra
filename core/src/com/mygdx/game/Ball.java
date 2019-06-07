@@ -11,6 +11,7 @@ public class Ball {
     Vector2 velocity;
     Viewport viewport;
     long spawnTime;
+    boolean click=false;
 
     public Ball(Vector2 position, Viewport viewport) {
         this.position = position;
@@ -24,13 +25,20 @@ public class Ball {
 //        if(position.y < 0 || position.y > viewport.getWorldHeight()) {
 //            velocity.y = -velocity.y;
 //        }
-        if(position.y < 0 && position.y > -10) {
-            Gdx.app.log("Ball", "" + (System.nanoTime() - spawnTime));
+        if(position.y < 100 && position.y > 25&& position.x==viewport.getWorldWidth()/2) {
+
+            //Gdx.app.log("Ball", "" + (System.nanoTime() - spawnTime));
+            //Gdx.app.log("Ball_Y", "" + position.y);
+
+
         }
+
     }
 
     public void render(ShapeRenderer renderer) {
+
         renderer.circle(position.x, position.y, 25);
     }
+
 
 }

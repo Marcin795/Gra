@@ -8,9 +8,6 @@ import java.util.ArrayList;
 
 public class BallPaths {
 
-    int count = 3;
-    float width = 30.0f;
-    float space = 40.0f;
     ArrayList<Float> positions;
     Viewport viewport;
 
@@ -22,14 +19,14 @@ public class BallPaths {
         renderer.setColor(Color.FOREST);
         renderer.set(ShapeRenderer.ShapeType.Filled);
         for(Float p : positions) {
-            renderer.rectLine(p, 0, p, viewport.getWorldHeight(), width);
+            renderer.rectLine(p, 0, p, viewport.getWorldHeight(), Constants.WIDTH);
         }
     }
 
     public void init() {
         positions = new ArrayList<Float>();
         positions.add(viewport.getWorldWidth()/2);
-        positions.add(viewport.getWorldWidth()/2 - width - space);
-        positions.add(viewport.getWorldWidth()/2 + width + space);
+        positions.add(viewport.getWorldWidth()/2 - Constants.WIDTH - Constants.SPACE);
+        positions.add(viewport.getWorldWidth()/2 + Constants.WIDTH + Constants.SPACE);
     }
 }
