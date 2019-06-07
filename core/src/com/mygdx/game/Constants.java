@@ -28,4 +28,6 @@ public class Constants {
 
     public static final float RANK_SZER = minWorldWidth/2;
 
+
+    public static final int BALL_SPEED = 800;
 }

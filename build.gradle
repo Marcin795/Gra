@@ -47,8 +47,13 @@ project(":desktop") {
 
     dependencies {
         compile project(":core")
+        // https://mvnrepository.com/artifact/javazoom/jlayer
+        compile group: 'javazoom', name: 'jlayer', version: '1.0.1'
         compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+
+
+        implementation 'com.googlecode.soundlibs:mp3spi:1.9.5.4'
         
     }
 }
@@ -60,12 +65,18 @@ project(":android") {
 
     dependencies {
         compile project(":core")
+        // https://mvnrepository.com/artifact/javazoom/jlayer
+        compile group: 'javazoom', name: 'jlayer', version: '1.0.1'
         compile "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-arm64-v8a"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86_64"
+
+
+        implementation 'com.googlecode.soundlibs:mp3spi:1.9.5.4'
+
         
     }
 }
@@ -77,10 +88,16 @@ project(":html") {
 
     dependencies {
         compile project(":core")
+        // https://mvnrepository.com/artifact/javazoom/jlayer
+        compile group: 'javazoom', name: 'jlayer', version: '1.0.1'
         compile "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
         compile "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion:sources"
-        
+
+
+        implementation 'com.googlecode.soundlibs:mp3spi:1.9.5.4'
+
+
     }
 }
 
@@ -89,8 +106,14 @@ project(":core") {
 
 
     dependencies {
+        // https://mvnrepository.com/artifact/javazoom/jlayer
+        compile group: 'javazoom', name: 'jlayer', version: '1.0.1'
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
-        
+
+
+        implementation 'com.googlecode.soundlibs:mp3spi:1.9.5.4'
+
+
     }
 }
 

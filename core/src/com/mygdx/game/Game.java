@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -20,6 +19,11 @@ import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.util.audio.PausablePlayer;
+import javazoom.jl.player.Player;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 import java.awt.*;
 import java.util.Arrays;
@@ -37,21 +41,28 @@ public class Game extends InputAdapter implements Screen {
     BitmapFont font;
     Preferences prefs;
     Json json;
-    Music music;
+    PausablePlayer player;
     Circles circles;
 
 
     End end;
     public Game(Gra gra){
-
         this.gra = gra;
     }
 
     @Override
     public void show() {
-        music = Gdx.audio.newMusic(Gdx.files.absolute("surfacing.mp3"));
-        music.play();
-        music.setVolume(0.1f);
+
+        try {
+            FileInputStream input = new FileInputStream("holiday.mp3");
+            player = new PausablePlayer(input);
+
+            // start playing
+            player.play();
+        } catch (final Exception e) {
+            throw new RuntimeException(e);
+        }
+
         camera = new OrthographicCamera();
         batch = new SpriteBatch();
         renderer = new ShapeRenderer();
@@ -79,9 +90,6 @@ public class Game extends InputAdapter implements Screen {
 
         balls.update(delta);
 
-
-
-
         renderer.begin();
 
         ballPaths.render(renderer);
@@ -90,7 +98,7 @@ public class Game extends InputAdapter implements Screen {
         if(balls.gameOver){
             //Gdx.app.log("Game","tak");
             end.render(renderer);
-            music.stop();
+            player.pause();
         }
 
         renderer.end();
@@ -115,14 +123,13 @@ public class Game extends InputAdapter implements Screen {
 
 
         batch.end();
-
-
     }
 
     @Override
     public void resize(int width, int height) {
         viewport.update(width,height,true);
         camera.update();
+
         balls.init();
         ballPaths.init();
         end.viewport.update(width, height, true);

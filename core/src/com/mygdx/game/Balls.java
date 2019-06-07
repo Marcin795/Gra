@@ -11,6 +11,8 @@ import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import static com.mygdx.game.Constants.BALL_SPEED;
+
 
 public class Balls {
 
@@ -33,32 +35,31 @@ public class Balls {
         ballsList1 = new DelayedRemovalArray<Ball>(false, 100);
         ballsList2 = new DelayedRemovalArray<Ball>(false, 100);
         ballsList3 = new DelayedRemovalArray<Ball>(false, 100);
-        level = Gdx.files.internal("levels/test.json");
+        level = Gdx.files.internal("levels/test2.json");
         Json json = new Json();
         JsonValue root = new JsonReader().parse(level);
-        left = root.get("level").get("left").asFloatArray();
-        middle = root.get("level").get("middle").asFloatArray();
-        right = root.get("level").get("right").asFloatArray();
+//        left = root.get("level").get("0").asFloatArray();
+//        middle = root.get("level").get("1").asFloatArray();
+//        right = root.get("level").get("2").asFloatArray();
+        left = root.get("0").asFloatArray();
+        middle = root.get("1").asFloatArray();
+        right = root.get("2").asFloatArray();
         float L = viewport.getWorldWidth()/2 - 30.0f - 40.0f;
         float M = viewport.getWorldWidth()/2;
         float R = viewport.getWorldWidth()/2 + 30.0f + 40.0f;
 
         for(float f : left) {
-            add(L, f * 400,ballsList1);
+            add(L, f * BALL_SPEED, ballsList1);
         }
         for(float f : middle) {
-            add(M, f * 400,ballsList2);
+            add(M, f * BALL_SPEED, ballsList2);
         }
         for(float f : right) {
-            add(R, f * 400,ballsList3);
+            add(R, f * BALL_SPEED, ballsList3);
         }
-
-        Gdx.app.log("Balls_left",left.length+"");
-        Gdx.app.log("Balls_middle",middle.length+"");
-        Gdx.app.log("Balls_right",right.length+"");
-        Gdx.app.log("Balls", viewport.getScreenHeight() + " " + viewport.getScreenWidth());
-        for (Float f : root.get("level").get("middle").asFloatArray()) {
-            Gdx.app.log("Balls", f+"");
+//        Gdx.app.log("Balls", viewport.getWorldHeight() + " " + viewport.getWorldWidth());
+        for (Float f : root.get("0").asFloatArray()) {
+//            Gdx.app.log("Balls", f+"");
         }
 
     }
@@ -84,7 +85,6 @@ public class Balls {
         }
         for(Ball ball : ballsList3) {
             ball.update(delta);
-
         }
 
 
@@ -137,5 +137,4 @@ public class Balls {
     void add(float x, float y, DelayedRemovalArray<Ball> ballsList) {
         ballsList.add(new Ball(new Vector2(x, y), viewport));
     }
-
 }
