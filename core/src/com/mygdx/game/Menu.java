@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.mygdx.game.util.Test;
 import net.spookygames.gdx.nativefilechooser.NativeFileChooser;
 import net.spookygames.gdx.nativefilechooser.NativeFileChooserCallback;
 import net.spookygames.gdx.nativefilechooser.NativeFileChooserConfiguration;
@@ -131,6 +132,7 @@ public class Menu extends InputAdapter implements Screen {
 //            gra.showChoiceScreen();
 //            gra.showGameScreen("E:\\Java\\lullaby.mp3");
             chooseFile();
+            generateTrack(path);
             gra.showGameScreen(path);
         }
         Rectangle rankingRect = new Rectangle(Constants.RANKING_W.x/Constants.MENU_SIZE*viewport.getWorldWidth()-Constants.SZER/2,
@@ -180,5 +182,14 @@ public class Menu extends InputAdapter implements Screen {
                 Gdx.app.exit();
             }
         });
+    }
+
+    public void generateTrack(String path) {
+        Test test = new Test(path);
+        try {
+            test.test();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

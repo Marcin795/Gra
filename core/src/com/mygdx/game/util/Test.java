@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
+import com.mygdx.game.util.audio.PausablePlayer;
 import com.mygdx.game.util.audio.analysis.SpectrumProvider;
 import com.mygdx.game.util.audio.analysis.ThresholdFunction;
 import com.mygdx.game.util.audio.io.MP3Decoder;
@@ -16,15 +17,29 @@ import java.util.Random;
 
 public class Test {
 
-    public static final String FILE = "holiday.mp3";
+//    public static final String FILE = "holiday.mp3";
     public static final int HOP_SIZE = 512;
     public static final int HISTORY_SIZE = 50;
     public static final float[] multipliers = { 1.5f, 1.5f, 1.5f };
     public static final float[] bands = { 80, 1000, 4000, 10000, 10000, 16000 };
+    String path;
+    PausablePlayer player;
+
+    public Test(String path) {
+        this.path = path;
+    }
 
     public void test() throws Exception {
 
-        MP3Decoder decoder = new MP3Decoder( new FileInputStream( FILE  ) );
+        try {
+            FileInputStream input = new FileInputStream("pianinko.mp3");
+            player = new PausablePlayer(input);
+            player.play();
+        } catch (final Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        MP3Decoder decoder = new MP3Decoder( new FileInputStream( path  ) );
         SpectrumProvider spectrumProvider = new SpectrumProvider( decoder, 1024, HOP_SIZE, true );
         float[] spectrum = spectrumProvider.nextSpectrum();
         float[] lastSpectrum = new float[spectrum.length];
@@ -105,6 +120,7 @@ public class Test {
         json.setOutputType(JsonWriter.OutputType.json);
         FileHandle level = Gdx.files.local("levels/test2.json");
         level.writeString(json.prettyPrint(times), false);
+        player.stop();
     }
 
 }

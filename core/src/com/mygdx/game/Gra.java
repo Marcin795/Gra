@@ -24,10 +24,8 @@ public class Gra extends Game {
 //            e.printStackTrace();
 //        }
         Gdx.app.log("Gra", "chyba dziala");
-//        Gdx.app.exit();
 
         showStartScreen();
-//        showChoiceScreen();
     }
     public void showStartScreen(){
         setScreen(new Menu(this, fileChooser));
@@ -37,8 +35,5 @@ public class Gra extends Game {
     }
     public void showRankingScreen(){
         setScreen(new Ranking(this));
-    }
-    public void showChoiceScreen(){
-        setScreen(new Choice(this, fileChooser));
     }
 }
