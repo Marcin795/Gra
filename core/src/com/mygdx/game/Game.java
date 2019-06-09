@@ -17,6 +17,10 @@ import com.mygdx.game.util.audio.PausablePlayer;
 
 import java.io.FileInputStream;
 
+
+/**
+ * Ekran gry
+ */
 public class Game extends InputAdapter implements Screen {
     protected Gra gra;
     private SpriteBatch batch;

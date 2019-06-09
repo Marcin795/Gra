@@ -21,6 +21,9 @@ import net.spookygames.gdx.nativefilechooser.NativeFileChooserCallback;
 import net.spookygames.gdx.nativefilechooser.NativeFileChooserConfiguration;
 
 
+/**
+ * Ekran menu
+ */
 public class Menu extends InputAdapter implements Screen {
     private final NativeFileChooser fileChooser;
     protected Gra gra;

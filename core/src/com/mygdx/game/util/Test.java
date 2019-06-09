@@ -15,6 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+
+/**
+ * Generuje kulki na podstawie muzyki
+ */
 public class Test {
 
     private static final int HOP_SIZE = 512;

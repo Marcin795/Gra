@@ -20,6 +20,10 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import java.util.Arrays;
 import java.util.Collections;
 
+
+/**
+ * Obsługuje ranking
+ */
 public class Ranking extends InputAdapter implements Screen {
     protected Gra gra;
     private SpriteBatch batch;

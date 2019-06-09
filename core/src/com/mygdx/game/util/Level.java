@@ -5,6 +5,9 @@ import com.badlogic.gdx.utils.JsonValue;
 
 import java.util.ArrayList;
 
+/**
+ * Przechowuje czasy kulek przed zapisaniem
+ */
 public class Level implements Json.Serializable{
     ArrayList<ArrayList<Float>> lanes;
 

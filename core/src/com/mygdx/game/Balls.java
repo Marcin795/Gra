@@ -13,6 +13,9 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import static com.mygdx.game.Constants.BALL_SPEED;
 
 
+/**
+ * Przechowuje wszystkie kulki
+ */
 class Balls {
 
     DelayedRemovalArray<Ball> ballsList1,ballsList2,ballsList3;

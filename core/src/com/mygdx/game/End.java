@@ -15,6 +15,10 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.Arrays;
 
+
+/**
+ * Overlay końca gry
+ */
 public class End extends InputAdapter{
     protected Gra gra;
     Viewport viewport;

@@ -4,6 +4,10 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import net.spookygames.gdx.nativefilechooser.NativeFileChooser;
 
+
+/**
+ * Główna klasa gry
+ */
 public class Gra extends Game {
 
     private NativeFileChooser fileChooser;

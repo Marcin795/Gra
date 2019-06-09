@@ -6,6 +6,10 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.ArrayList;
 
+
+/**
+ * Ścieżki po których lecą kulki
+ */
 class BallPaths {
 
     private ArrayList<Float> positions;
