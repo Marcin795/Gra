@@ -1,19 +1,17 @@
 package com.mygdx.game;
+        import com.badlogic.gdx.Gdx;
+        import com.badlogic.gdx.InputAdapter;
+        import com.badlogic.gdx.Preferences;
+        import com.badlogic.gdx.graphics.*;
+        import com.badlogic.gdx.graphics.g2d.BitmapFont;
+        import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+        import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+        import com.badlogic.gdx.utils.Align;
+        import com.badlogic.gdx.utils.Json;
+        import com.badlogic.gdx.utils.viewport.ExtendViewport;
+        import com.badlogic.gdx.utils.viewport.Viewport;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.Preferences;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
-
-import java.util.Arrays;
+        import java.util.Arrays;
 
 
 /**
@@ -27,11 +25,10 @@ public class End extends InputAdapter{
     private Texture end;
     private Json json;
     private int[] values;
-    private boolean rank;
+    private boolean rank=true;
 
 
     End(Gra gra){
-        rank = true;
         this.gra=gra;
         this.viewport = new ExtendViewport(Constants.minWorldWidth, Constants.minWorldHeight);
         font = new BitmapFont(Gdx.files.internal("czcionka2.fnt"));
@@ -43,7 +40,6 @@ public class End extends InputAdapter{
 
 
     }
-
     void render(SpriteBatch batch) {
 
         viewport.apply();
@@ -59,7 +55,6 @@ public class End extends InputAdapter{
         batch.end();
 
     }
-
     void render(ShapeRenderer renderer) {
 
         viewport.apply();
@@ -75,6 +70,9 @@ public class End extends InputAdapter{
 
     }
 
+    /**
+     * Dodaje uzyskany wynik do rankingu i aktualizuje najlepszy wynik.
+     */
     void addScore(){
 
         if(rank) {
@@ -88,7 +86,7 @@ public class End extends InputAdapter{
 
             values = addElement(values, prefs.getInteger("score"));
 
-            Gdx.app.log("Game", Arrays.toString(values));
+            Gdx.app.log("Game", Arrays.toString(values) + "");
             prefs.putString("values", json.toJson(values));
 
 
@@ -100,6 +98,13 @@ public class End extends InputAdapter{
             rank=false;
         }
     }
+
+    /**
+     * Dodaje element e do tablicy a
+     * @param a tablica
+     * @param e element
+     * @return tablica z dodanym elementem
+     */
     private static int[] addElement(int[] a, int e) {
         a  = Arrays.copyOf(a, a.length + 1);
         a[a.length - 1] = e;

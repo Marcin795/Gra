@@ -1,7 +1,6 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import net.spookygames.gdx.nativefilechooser.NativeFileChooser;
 
 
@@ -16,26 +15,29 @@ public class Gra extends Game {
         this.fileChooser = fileChooser;
     }
 
-    // Menu start;
     @Override
     public void create() {
-
-//        Test test = new Test();
-//        try {
-//            test.test();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-        Gdx.app.log("Gra", "chyba dziala");
-
         showStartScreen();
     }
+
+    /**
+     * Ustawia ekran startowy.
+     */
     void showStartScreen(){
         setScreen(new Menu(this, fileChooser));
     }
+
+    /**
+     * Ustawia ekran gry.
+     * @param absolutePath
+     */
     void showGameScreen(String absolutePath){
         setScreen(new com.mygdx.game.Game(this, absolutePath));
     }
+
+    /**
+     * Ustawia ekran rankingu.
+     */
     void showRankingScreen(){
         setScreen(new Ranking(this));
     }

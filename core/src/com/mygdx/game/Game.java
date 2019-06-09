@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.util.audio.PausablePlayer;
@@ -29,18 +31,15 @@ public class Game extends InputAdapter implements Screen {
     private ShapeRenderer renderer;
     private Balls balls;
     private BallPaths ballPaths;
-    private int score;
+    private int score=0;
     private BitmapFont font;
     private Preferences prefs;
+    private Json json;
     private PausablePlayer player;
     private Circles circles;
-
     private End end;
-
     private String path;
-
     Game(Gra gra, String absolutePath){
-        score = 0;
         this.gra = gra;
         this.path = absolutePath;
     }
@@ -64,7 +63,7 @@ public class Game extends InputAdapter implements Screen {
         viewport = new ExtendViewport(Constants.minWorldWidth,Constants.minWorldHeight,camera);
         font = new BitmapFont(Gdx.files.internal("czcionka2.fnt"));
         prefs = Gdx.app.getPreferences("ranking");
-//        Json json = new Json();
+        json = new Json();
         end = new End(gra);
         Gdx.input.setInputProcessor(this);
         balls = new Balls(viewport);
@@ -122,7 +121,6 @@ public class Game extends InputAdapter implements Screen {
         circles.render(renderer);
         balls.render(renderer);
         if(balls.gameOver){
-            //Gdx.app.log("Game","tak");
             end.render(renderer);
             player.pause();
         }
@@ -130,7 +128,6 @@ public class Game extends InputAdapter implements Screen {
         renderer.end();
 
         if(balls.gameOver){
-            //Gdx.app.log("Game","tak");
             end.render(batch);
             end.addScore();
         }
@@ -183,6 +180,15 @@ public class Game extends InputAdapter implements Screen {
     public void dispose() {
 
     }
+
+    /**
+     * Nalicza punkty, po kliknieciu jednego z trzech dolnych kolek w odpowiednim momencie. Gdy gra jest skonczona, wraca do ekranu startowego po kliknieciu przycisku "BACK".
+     * @param screenX wspolrzedna x
+     * @param screenY wspolrzedna y
+     * @param pointer
+     * @param button
+     * @return
+     */
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         Vector2 worldTouch = viewport.unproject(new Vector2(screenX, screenY));
         if(balls.gameOver){
@@ -211,7 +217,6 @@ public class Game extends InputAdapter implements Screen {
 
             else if (worldTouch.dst(viewport.getWorldWidth()/2,25) < 25) {
 
-                //Gdx.app.log("odl",balls.ballsList2+"");
                 if(!balls.ballsList2.isEmpty()){
                     for(Ball ball:balls.ballsList2){
                         if(ball.position.dst(circles.k2.x,circles.k2.y)<50&&!ball.click) {

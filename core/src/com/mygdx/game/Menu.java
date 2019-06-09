@@ -5,12 +5,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -19,6 +15,9 @@ import com.mygdx.game.util.Test;
 import net.spookygames.gdx.nativefilechooser.NativeFileChooser;
 import net.spookygames.gdx.nativefilechooser.NativeFileChooserCallback;
 import net.spookygames.gdx.nativefilechooser.NativeFileChooserConfiguration;
+
+import java.io.File;
+import java.io.FilenameFilter;
 
 
 /**
@@ -32,7 +31,7 @@ public class Menu extends InputAdapter implements Screen {
     private Camera camera;
     private ShapeRenderer renderer;
     private BitmapFont font;
-    private Texture play, ranking;
+    private Texture play,ranking;
 
     private String path;
 
@@ -64,7 +63,6 @@ public class Menu extends InputAdapter implements Screen {
 
         batch.setProjectionMatrix(viewport.getCamera().combined);
         renderer.setProjectionMatrix(viewport.getCamera().combined);
-
         batch.begin();
         batch.draw(play,Constants.START_W.x/Constants.MENU_SIZE*viewport.getWorldWidth()-Constants.SZER/2,Constants.START_W.y/Constants.MENU_SIZE*viewport.getWorldHeight(),Constants.SZER,Constants.WYS);
         batch.draw(ranking,Constants.RANKING_W.x/Constants.MENU_SIZE*viewport.getWorldWidth()-Constants.SZER/2,Constants.RANKING_W.y/Constants.MENU_SIZE*viewport.getWorldHeight(),Constants.SZER,Constants.WYS);
@@ -105,7 +103,9 @@ public class Menu extends InputAdapter implements Screen {
         renderer.dispose();
     }
 
-    @Override
+    /**
+     * Metoda obslugujaca klikniecia myszy. Pozwala przejsc do gry (pierwszy przycisk) lub do rankingu(drugi przycisk).
+     */
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         Vector2 worldTouch = viewport.unproject(new Vector2(screenX, screenY));
 
@@ -114,6 +114,7 @@ public class Menu extends InputAdapter implements Screen {
                 Constants.SZER,
                 Constants.WYS);
         if(startRect.contains(worldTouch)) {
+            Gdx.app.log("Menu", "asdf");
             chooseFile();
             generateTrack(path);
             gra.showGameScreen(path);
@@ -127,44 +128,49 @@ public class Menu extends InputAdapter implements Screen {
         }
 
         return true;
+
+
     }
 
+    /**
+     * Pozwala wybrać muzykę do gry.
+     */
     private void chooseFile() {
 
         NativeFileChooserConfiguration conf = new NativeFileChooserConfiguration();
         conf.directory = Gdx.files.absolute(System.getProperty("user.home"));
         conf.mimeFilter = "audio/*";
-//        conf.nameFilter = new FilenameFilter() {
-//            @Override
-//            public boolean accept(File dir, String name) {
-//                return name.endsWith("mp3");
-//            }
-//        };
+        conf.nameFilter = new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String name) {
+                return name.endsWith("mp3");
+            }
+        };
         conf.title = "Choose audio file";
         fileChooser.chooseFile(conf, new NativeFileChooserCallback() {
             @Override
             public void onFileChosen(FileHandle file) {
-                // Do stuff with file, yay!
-                Gdx.app.log("Choice", file.file().getAbsolutePath());
+
+                //Gdx.app.log("Choice", file.file().getAbsolutePath());
                 path = file.file().getAbsolutePath();
             }
 
             @Override
             public void onCancellation() {
-                // Warn user how rude it can be to cancel developer's effort
-                Gdx.app.log("Choice", "To JEB SIE!!!");
                 Gdx.app.exit();
             }
 
             @Override
             public void onError(Exception exception) {
-                // Handle error (hint: use exception type)
-                Gdx.app.log("Choice", "Huh?");
                 Gdx.app.exit();
             }
         });
     }
 
+    /**
+     * Metoda generująca trasę lecących kulek.
+     * @param path
+     */
     private void generateTrack(String path) {
         Test test = new Test(path);
         try {

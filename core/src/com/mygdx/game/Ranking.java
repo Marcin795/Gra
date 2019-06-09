@@ -33,11 +33,11 @@ public class Ranking extends InputAdapter implements Screen {
     private Texture back;
     private Preferences prefs;
     private Json json;
-    private int ranking;
+    private Integer[] values;
+    private int ranking=9;
 
     Ranking(Gra gra){
         this.gra=gra;
-        ranking = 9;
     }
 
     @Override
@@ -67,19 +67,20 @@ public class Ranking extends InputAdapter implements Screen {
         batch.draw(back,0,0,Constants.SZER,Constants.WYS);
         if(!prefs.getString("values").isEmpty()){
 
-            Integer[] values = json.fromJson(Integer[].class, prefs.getString("values"));
+            values = json.fromJson(Integer[].class, prefs.getString("values"));
             Arrays.sort(values, Collections.reverseOrder());
             if(values.length<=ranking){
-                ranking= values.length-1;
+                ranking=values.length-1;
             }
             for(int i=0;i<=ranking;i++){
 
                 font_r.draw(batch, i+1+".", Constants.RANKING_W.x/Constants.MENU_SIZE*viewport.getWorldWidth()-Constants.RANK_SZER/2, viewport.getWorldHeight()*0.7f-35*i,0,Align.center,false);
-                font_r.draw(batch, ""+ values[i], viewport.getWorldWidth()/2, viewport.getWorldHeight()*0.7f-35*i,0,Align.center,false);
+                font_r.draw(batch, ""+values[i], viewport.getWorldWidth()/2, viewport.getWorldHeight()*0.7f-35*i,0,Align.center,false);
 
             }
             values = Arrays.copyOf(values, ranking + 1);
             prefs.putString("values", json.toJson(values));
+            //Gdx.app.log("Ranking",values.length+"");
         }
 
 
@@ -106,18 +107,24 @@ public class Ranking extends InputAdapter implements Screen {
     @Override
     public void hide() {
         batch.dispose();
+        //renderer.dispose();
     }
 
     @Override
     public void dispose() {
 
     }
+
+    /**
+     * Metoda obslugujaca klikniecia myszy. Pozwala wrocic do ekranu glownego.
+     */
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         Vector2 worldTouch = viewport.unproject(new Vector2(screenX, screenY));
 
         Rectangle startRect = new Rectangle(0, 0, Constants.SZER, Constants.WYS);
         if(startRect.contains(worldTouch)) {
             gra.showStartScreen();
+
         }
 
         return true;
