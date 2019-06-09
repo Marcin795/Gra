@@ -32,7 +32,6 @@ public class Menu extends InputAdapter implements Screen {
     private ExtendViewport viewport;
     private Camera camera;
     private ShapeRenderer renderer;
-    private BitmapFont font;
     private Texture play,ranking;
 
     private String path;
@@ -50,9 +49,7 @@ public class Menu extends InputAdapter implements Screen {
         viewport= new ExtendViewport(Constants.minWorldWidth,Constants.minWorldHeight,camera);
         play= new Texture("pl.png");
         ranking = new Texture("rank.png");
-        font = new BitmapFont();
-        font.getData().setScale(2);
-        font.getRegion().getTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+
         Gdx.input.setInputProcessor(this);
 
     }
@@ -92,14 +89,12 @@ public class Menu extends InputAdapter implements Screen {
     @Override
     public void hide() {
         batch.dispose();
-        font.dispose();
         renderer.dispose();
     }
 
     @Override
     public void dispose() {
         batch.dispose();
-        font.dispose();
         renderer.dispose();
     }
 

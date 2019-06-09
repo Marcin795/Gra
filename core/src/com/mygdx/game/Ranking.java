@@ -78,7 +78,6 @@ public class Ranking extends InputAdapter implements Screen {
             }
             values = Arrays.copyOf(values, ranking + 1);
             prefs.putString("values", json.toJson(values));
-            //Gdx.app.log("Ranking",values.length+"");
         }
         batch.end();
     }

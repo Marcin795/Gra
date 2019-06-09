@@ -23,7 +23,7 @@ public class Constants {
 
     static final float RANK_SZER = minWorldWidth/2;
 
-
+    static final int R=25;
     static final int BALL_SPEED = 800;
 
     public static final String LEVEL_PATH = "levels/test2.json";

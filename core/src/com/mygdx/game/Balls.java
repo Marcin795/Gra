@@ -36,9 +36,9 @@ class Balls {
         float[] left = root.get("0").asFloatArray();
         float[] middle = root.get("1").asFloatArray();
         float[] right = root.get("2").asFloatArray();
-        float L = viewport.getWorldWidth()/2 - 30.0f - 40.0f;
+        float L = viewport.getWorldWidth()/2 - Constants.WIDTH - Constants.SPACE;
         float M = viewport.getWorldWidth()/2;
-        float R = viewport.getWorldWidth()/2 + 30.0f + 40.0f;
+        float R = viewport.getWorldWidth()/2 + Constants.WIDTH + Constants.SPACE;
 
         for(float f : left) {
             add(L, f * BALL_SPEED, ballsList1);
@@ -65,7 +65,7 @@ class Balls {
 
         ballsList1.begin();
         for (int i = 0; i < ballsList1.size; i++) {
-            if (ballsList1.get(i).position.y < -50) {
+            if (ballsList1.get(i).position.y < -2*Constants.R) {
                 ballsList1.removeIndex(i);
             }
         }
@@ -73,14 +73,14 @@ class Balls {
         ballsList2.begin();
 
         for (int i = 0; i < ballsList2.size; i++) {
-            if (ballsList2.get(i).position.y < -50) {
+            if (ballsList2.get(i).position.y < -2*Constants.R) {
                 ballsList2.removeIndex(i);
             }
         }
         ballsList2.end();
         ballsList3.begin();
         for (int i = 0; i < ballsList3.size; i++) {
-            if (ballsList3.get(i).position.y < -50) {
+            if (ballsList3.get(i).position.y < -2*Constants.R) {
                 ballsList3.removeIndex(i);
             }
         }
@@ -113,6 +113,6 @@ class Balls {
      */
 
     private void add(float x, float y, DelayedRemovalArray<Ball> ballsList) {
-        ballsList.add(new Ball(new Vector2(x, y+25)));
+        ballsList.add(new Ball(new Vector2(x, y+Constants.R)));
     }
 }

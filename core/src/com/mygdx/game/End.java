@@ -77,7 +77,6 @@ public class End extends InputAdapter{
     void addScore(){
 
         if(rank) {
-            Gdx.app.log("End","tak");
             if(prefs.getString("values").isEmpty()){
                 prefs.putString("values", json.toJson(values));
             }

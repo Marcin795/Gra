@@ -199,7 +199,7 @@ public class Game extends InputAdapter implements Screen {
 
         }
         else{
-            if (worldTouch.dst(viewport.getWorldWidth()/2-Constants.WIDTH-Constants.SPACE,25) < 25) {
+            if (worldTouch.dst(viewport.getWorldWidth()/2-Constants.WIDTH-Constants.SPACE,Constants.R) < Constants.R) {
                 if (!balls.ballsList1.isEmpty()) {
                     for(Ball ball:balls.ballsList1){
                         if(ball.position.dst(circles.k1.x,circles.k1.y)<50&&!ball.click) {
@@ -211,7 +211,7 @@ public class Game extends InputAdapter implements Screen {
                 }
             }
 
-            else if (worldTouch.dst(viewport.getWorldWidth()/2,25) < 25) {
+            else if (worldTouch.dst(viewport.getWorldWidth()/2,Constants.R) < Constants.R) {
 
                 if(!balls.ballsList2.isEmpty()){
                     for(Ball ball:balls.ballsList2){
@@ -226,7 +226,7 @@ public class Game extends InputAdapter implements Screen {
 
             }
 
-            else if (worldTouch.dst(viewport.getWorldWidth()/2+Constants.WIDTH+Constants.SPACE,25) < 25) {
+            else if (worldTouch.dst(viewport.getWorldWidth()/2+Constants.WIDTH+Constants.SPACE,Constants.R) < Constants.R) {
                 if(!balls.ballsList3.isEmpty()) {
                     for(Ball ball:balls.ballsList3){
                         if(ball.position.dst(circles.k3.x,circles.k3.y)<50&&!ball.click) {

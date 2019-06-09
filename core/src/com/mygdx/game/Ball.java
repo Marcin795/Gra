@@ -22,7 +22,7 @@ class Ball {
     }
 
     void render(ShapeRenderer renderer) {
-        renderer.circle(position.x, position.y, 25);
+        renderer.circle(position.x, position.y, Constants.R);
     }
 
 }
