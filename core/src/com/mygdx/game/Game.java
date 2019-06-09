@@ -19,6 +19,8 @@ import com.mygdx.game.util.audio.PausablePlayer;
 
 import java.io.FileInputStream;
 
+import static com.mygdx.game.Constants.*;
+
 
 /**
  * Ekran gry
@@ -31,15 +33,16 @@ public class Game extends InputAdapter implements Screen {
     private ShapeRenderer renderer;
     private Balls balls;
     private BallPaths ballPaths;
-    private int score=0;
+    private int score;
     private BitmapFont font;
     private Preferences prefs;
-    private Json json;
     private PausablePlayer player;
     private Circles circles;
     private End end;
     private String path;
+
     Game(Gra gra, String absolutePath){
+        score = 0;
         this.gra = gra;
         this.path = absolutePath;
     }
@@ -50,7 +53,6 @@ public class Game extends InputAdapter implements Screen {
         try {
             FileInputStream input = new FileInputStream(path);
             player = new PausablePlayer(input);
-
             // start playing
             player.play();
         } catch (final Exception e) {
@@ -63,7 +65,6 @@ public class Game extends InputAdapter implements Screen {
         viewport = new ExtendViewport(Constants.minWorldWidth,Constants.minWorldHeight,camera);
         font = new BitmapFont(Gdx.files.internal("czcionka2.fnt"));
         prefs = Gdx.app.getPreferences("ranking");
-        json = new Json();
         end = new End(gra);
         Gdx.input.setInputProcessor(this);
         balls = new Balls(viewport);
@@ -79,7 +80,7 @@ public class Game extends InputAdapter implements Screen {
         renderer.setProjectionMatrix(viewport.getCamera().combined);
         renderer.setAutoShapeType(true);
 
-        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClearColor(BACKGROUND_R, BACKGROUND_G, BACKGROUND_B, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         if(Gdx.input.isKeyJustPressed(Input.Keys.A)||Gdx.input.isKeyJustPressed(Input.Keys.LEFT)){
             if (!balls.ballsList1.isEmpty()) {

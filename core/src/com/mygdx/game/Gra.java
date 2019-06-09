@@ -29,7 +29,6 @@ public class Gra extends Game {
 
     /**
      * Ustawia ekran gry.
-     * @param absolutePath
      */
     void showGameScreen(String absolutePath){
         setScreen(new com.mygdx.game.Game(this, absolutePath));

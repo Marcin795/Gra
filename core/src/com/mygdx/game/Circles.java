@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import static com.mygdx.game.Constants.BUTTON_COLOR;
+
 
 class Circles {
     private Viewport viewport;
@@ -15,7 +17,7 @@ class Circles {
     }
 
     void render(ShapeRenderer renderer) {
-        renderer.setColor(Color.RED);
+        renderer.setColor(BUTTON_COLOR);
         renderer.set(ShapeRenderer.ShapeType.Filled);
 
         renderer.circle(viewport.getWorldWidth()/2,25,25);

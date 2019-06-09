@@ -19,6 +19,8 @@ import net.spookygames.gdx.nativefilechooser.NativeFileChooserConfiguration;
 import java.io.File;
 import java.io.FilenameFilter;
 
+import static com.mygdx.game.Constants.*;
+
 
 /**
  * Ekran menu
@@ -58,7 +60,7 @@ public class Menu extends InputAdapter implements Screen {
     @Override
     public void render(float delta) {
         viewport.apply();
-        Gdx.gl.glClearColor(0, 0, 1, 1);
+        Gdx.gl.glClearColor(BACKGROUND_R, BACKGROUND_G, BACKGROUND_B, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.setProjectionMatrix(viewport.getCamera().combined);
@@ -67,9 +69,7 @@ public class Menu extends InputAdapter implements Screen {
         batch.draw(play,Constants.START_W.x/Constants.MENU_SIZE*viewport.getWorldWidth()-Constants.SZER/2,Constants.START_W.y/Constants.MENU_SIZE*viewport.getWorldHeight(),Constants.SZER,Constants.WYS);
         batch.draw(ranking,Constants.RANKING_W.x/Constants.MENU_SIZE*viewport.getWorldWidth()-Constants.SZER/2,Constants.RANKING_W.y/Constants.MENU_SIZE*viewport.getWorldHeight(),Constants.SZER,Constants.WYS);
 
-
         batch.end();
-
     }
 
     @Override
@@ -150,8 +150,6 @@ public class Menu extends InputAdapter implements Screen {
         fileChooser.chooseFile(conf, new NativeFileChooserCallback() {
             @Override
             public void onFileChosen(FileHandle file) {
-
-                //Gdx.app.log("Choice", file.file().getAbsolutePath());
                 path = file.file().getAbsolutePath();
             }
 

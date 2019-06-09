@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static com.mygdx.game.Constants.LEVEL_PATH;
+
 
 /**
  * Generuje kulki na podstawie muzyki
@@ -122,7 +124,7 @@ public class Test {
         // Save times to json
         Json json = new Json();
         json.setOutputType(JsonWriter.OutputType.json);
-        FileHandle level = Gdx.files.local("levels/test2.json");
+        FileHandle level = Gdx.files.local(LEVEL_PATH);
         level.writeString(json.prettyPrint(times), false);
         player.stop();
     }

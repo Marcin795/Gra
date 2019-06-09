@@ -13,6 +13,9 @@ package com.mygdx.game;
 
         import java.util.Arrays;
 
+        import static com.mygdx.game.Constants.END_OVERLAY_BACKGROUND_COLOR;
+        import static com.mygdx.game.Constants.FONT_COLOR;
+
 
 /**
  * Overlay końca gry
@@ -45,8 +48,8 @@ public class End extends InputAdapter{
         viewport.apply();
         batch.setProjectionMatrix(viewport.getCamera().combined);
         batch.begin();
-        font.setColor(Color.WHITE);
-        font1.setColor(Color.WHITE);
+        font.setColor(FONT_COLOR);
+        font1.setColor(FONT_COLOR);
         batch.draw(end,Constants.START_W.x/Constants.MENU_SIZE*viewport.getWorldWidth()-Constants.SZER/2, viewport.getWorldHeight() / 3,Constants.SZER,Constants.WYS/3);
 
         int name = prefs.getInteger("score");
@@ -61,13 +64,11 @@ public class End extends InputAdapter{
         renderer.setProjectionMatrix(viewport.getCamera().combined);
         renderer.set(ShapeRenderer.ShapeType.Filled);
 
-        renderer.setColor(new Color(0, 0, 0, 1f));
+        renderer.setColor(END_OVERLAY_BACKGROUND_COLOR);
         renderer.rect(Constants.START_W.x / Constants.MENU_SIZE * viewport.getWorldWidth() / 2,
                 Constants.START_W.y / Constants.MENU_SIZE * viewport.getWorldHeight() / 2,
                 viewport.getWorldWidth() / 2,
                 viewport.getWorldHeight() / 3);
-
-
     }
 
     /**
@@ -79,20 +80,15 @@ public class End extends InputAdapter{
             Gdx.app.log("End","tak");
             if(prefs.getString("values").isEmpty()){
                 prefs.putString("values", json.toJson(values));
-
             }
 
             values = json.fromJson(int[].class, prefs.getString("values"));
-
             values = addElement(values, prefs.getInteger("score"));
 
-            Gdx.app.log("Game", Arrays.toString(values) + "");
             prefs.putString("values", json.toJson(values));
-
 
             if (prefs.getInteger("score") > prefs.getInteger("best")) {
                 prefs.putInteger("best", prefs.getInteger("score"));
-
             }
             prefs.flush();
             rank=false;

@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import static com.mygdx.game.Constants.BALL_SPEED;
+import static com.mygdx.game.Constants.LEVEL_PATH;
 
 
 /**
@@ -30,7 +31,7 @@ class Balls {
         ballsList1 = new DelayedRemovalArray<>(false, 100);
         ballsList2 = new DelayedRemovalArray<>(false, 100);
         ballsList3 = new DelayedRemovalArray<>(false, 100);
-        FileHandle level = Gdx.files.internal("levels/test2.json");
+        FileHandle level = Gdx.files.internal(LEVEL_PATH);
         JsonValue root = new JsonReader().parse(level);
         float[] left = root.get("0").asFloatArray();
         float[] middle = root.get("1").asFloatArray();
