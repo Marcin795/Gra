@@ -199,7 +199,7 @@ public abstract class FourierTransform
 
     if (whichAverage == LINAVG)
     {
-      int avgWidth = (int) spectrum.length / averages.length;
+      int avgWidth = spectrum.length / averages.length;
       for (int i = 0; i < averages.length; i++)
       {
         float avg = 0;
@@ -473,7 +473,7 @@ public abstract class FourierTransform
     if ( whichAverage == LINAVG )
     {
       // an average represents a certain number of bands in the spectrum
-      int avgWidth = (int) spectrum.length / averages.length;
+      int avgWidth = spectrum.length / averages.length;
       // the "center" bin of the average, this is fudgy.
       int centerBinIndex = i*avgWidth + avgWidth/2;
       return indexToFreq(centerBinIndex);

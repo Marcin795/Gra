@@ -110,7 +110,7 @@ public class MP3Decoder implements Decoder
 			int mLength = (int)mediaLength;
 			int size = inputStream.available();
 			PushbackInputStream pis = new PushbackInputStream(inputStream, MARK_LIMIT);
-			byte head[] = new byte[22];
+			byte[] head = new byte[22];
 			pis.read(head);			
 
 			// Check for WAV, AU, and AIFF, Ogg Vorbis, Flac, MAC file formats.

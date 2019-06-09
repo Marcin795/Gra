@@ -17,13 +17,11 @@ import java.util.Random;
 
 public class Test {
 
-//    public static final String FILE = "holiday.mp3";
-    public static final int HOP_SIZE = 512;
-    public static final int HISTORY_SIZE = 50;
-    public static final float[] multipliers = { 1.5f, 1.5f, 1.5f };
-    public static final float[] bands = { 80, 1000, 4000, 10000, 10000, 16000 };
-    String path;
-    PausablePlayer player;
+    private static final int HOP_SIZE = 512;
+    private static final int HISTORY_SIZE = 50;
+    private static final float[] multipliers = { 1.5f, 1.5f, 1.5f };
+    private static final float[] bands = { 80, 1000, 4000, 10000, 10000, 16000 };
+    private String path;
 
     public Test(String path) {
         this.path = path;
@@ -31,8 +29,9 @@ public class Test {
 
     public void test() throws Exception {
 
+        PausablePlayer player;
         try {
-            FileInputStream input = new FileInputStream("pianinko.mp3");
+            FileInputStream input = new FileInputStream("pianinko.mp3" );
             player = new PausablePlayer(input);
             player.play();
         } catch (final Exception e) {
@@ -43,12 +42,12 @@ public class Test {
         SpectrumProvider spectrumProvider = new SpectrumProvider( decoder, 1024, HOP_SIZE, true );
         float[] spectrum = spectrumProvider.nextSpectrum();
         float[] lastSpectrum = new float[spectrum.length];
-        List<List<Float>> spectralFlux = new ArrayList<List<Float>>( );
-        List<List<Float>> prunedSpectralFlux = new ArrayList<List<Float>>( );
-        List<Pair<Integer, Float>> peaks = new ArrayList<Pair<Integer, Float>>( );
+        List<List<Float>> spectralFlux = new ArrayList<>();
+        List<List<Float>> prunedSpectralFlux = new ArrayList<>();
+        List<Pair<Integer, Float>> peaks = new ArrayList<>();
         for( int i = 0; i < bands.length / 2; i++ ) {
-            spectralFlux.add( new ArrayList<Float>( ) );
-            prunedSpectralFlux.add( new ArrayList<Float>( ) );
+            spectralFlux.add(new ArrayList<>() );
+            prunedSpectralFlux.add(new ArrayList<>() );
         }
 
         do {
@@ -67,7 +66,7 @@ public class Test {
             System.arraycopy( spectrum, 0, lastSpectrum, 0, spectrum.length );
         } while( (spectrum = spectrumProvider.nextSpectrum() ) != null );
 
-        List<List<Float>> thresholds = new ArrayList<List<Float>>( );
+        List<List<Float>> thresholds = new ArrayList<>();
         for( int i = 0; i < bands.length / 2; i++ ) {
             List<Float> threshold = new ThresholdFunction( HISTORY_SIZE, multipliers[i] ).calculate( spectralFlux.get(i) );
             thresholds.add( threshold );
@@ -88,7 +87,7 @@ public class Test {
                 if( prunedSpectralFlux.get(j).get(i) > prunedSpectralFlux.get(j).get(i+1) ) {
                     peaks.add(new Pair<>(j, prunedSpectralFlux.get(j).get(i)));
                 } else {
-                    peaks.add(new Pair<>(j, new Float(0)));
+                    peaks.add(new Pair<>(j, 0f));
                 }
             }
         }
@@ -103,9 +102,9 @@ public class Test {
                 if(i < peaks.size() / 3) {
                     current =  i * (1024f / 44100);
                 } else if(i < peaks.size() / 3 * 2){
-                    current = (i - peaks.size() / 3) * (1024f / 44100);
+                    current = (i - peaks.size() / 3f) * (1024f / 44100);
                 } else {
-                    current = (i - peaks.size() / 3 * 2) * (1024f / 44100);
+                    current = (i - peaks.size() / 3f * 2) * (1024f / 44100);
                 }
                 Random random = new Random((0xDEADBEEF));
                 if(current > last + 0.15 || random.nextFloat() > 0.95f) {

@@ -2,12 +2,11 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.mygdx.game.util.Test;
 import net.spookygames.gdx.nativefilechooser.NativeFileChooser;
 
 public class Gra extends Game {
 
-    NativeFileChooser fileChooser;
+    private NativeFileChooser fileChooser;
 
     public Gra(NativeFileChooser fileChooser) {
         this.fileChooser = fileChooser;
@@ -27,13 +26,13 @@ public class Gra extends Game {
 
         showStartScreen();
     }
-    public void showStartScreen(){
+    void showStartScreen(){
         setScreen(new Menu(this, fileChooser));
     }
-    public void showGameScreen(String absolutePath){
+    void showGameScreen(String absolutePath){
         setScreen(new com.mygdx.game.Game(this, absolutePath));
     }
-    public void showRankingScreen(){
+    void showRankingScreen(){
         setScreen(new Ranking(this));
     }
 }

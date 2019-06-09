@@ -10,35 +10,30 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
 public class Ranking extends InputAdapter implements Screen {
     protected Gra gra;
-    protected SpriteBatch batch;
-    protected Viewport viewport;
-    Camera camera;
-    ShapeRenderer renderer;
-    BitmapFont font,font_r;
-    Texture back;
-    Preferences prefs;
-    Json json;
-    Integer[] values;
-    int ranking=9;
+    private SpriteBatch batch;
+    private Viewport viewport;
+    private Camera camera;
+    private BitmapFont font,font_r;
+    private Texture back;
+    private Preferences prefs;
+    private Json json;
+    private int ranking;
 
-    public Ranking(Gra gra){
+    Ranking(Gra gra){
         this.gra=gra;
+        ranking = 9;
     }
 
     @Override
@@ -68,20 +63,19 @@ public class Ranking extends InputAdapter implements Screen {
         batch.draw(back,0,0,Constants.SZER,Constants.WYS);
         if(!prefs.getString("values").isEmpty()){
 
-            values = json.fromJson(Integer[].class, prefs.getString("values"));
+            Integer[] values = json.fromJson(Integer[].class, prefs.getString("values"));
             Arrays.sort(values, Collections.reverseOrder());
             if(values.length<=ranking){
-                ranking=values.length-1;
+                ranking= values.length-1;
             }
             for(int i=0;i<=ranking;i++){
 
                 font_r.draw(batch, i+1+".", Constants.RANKING_W.x/Constants.MENU_SIZE*viewport.getWorldWidth()-Constants.RANK_SZER/2, viewport.getWorldHeight()*0.7f-35*i,0,Align.center,false);
-                font_r.draw(batch, ""+values[i], viewport.getWorldWidth()/2, viewport.getWorldHeight()*0.7f-35*i,0,Align.center,false);
+                font_r.draw(batch, ""+ values[i], viewport.getWorldWidth()/2, viewport.getWorldHeight()*0.7f-35*i,0,Align.center,false);
 
             }
             values = Arrays.copyOf(values, ranking + 1);
             prefs.putString("values", json.toJson(values));
-            //Gdx.app.log("Ranking",values.length+"");
         }
 
 
@@ -108,7 +102,6 @@ public class Ranking extends InputAdapter implements Screen {
     @Override
     public void hide() {
         batch.dispose();
-        //renderer.dispose();
     }
 
     @Override
@@ -121,7 +114,6 @@ public class Ranking extends InputAdapter implements Screen {
         Rectangle startRect = new Rectangle(0, 0, Constants.SZER, Constants.WYS);
         if(startRect.contains(worldTouch)) {
             gra.showStartScreen();
-
         }
 
         return true;

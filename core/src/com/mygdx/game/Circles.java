@@ -5,17 +5,15 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import javax.swing.*;
-
-public class Circles {
-    Viewport viewport;
+class Circles {
+    private Viewport viewport;
     Circle k1,k2,k3;
 
-    public Circles(Viewport viewport) {
+    Circles(Viewport viewport) {
         this.viewport = viewport;
     }
 
-    public void render(ShapeRenderer renderer) {
+    void render(ShapeRenderer renderer) {
         renderer.setColor(Color.RED);
         renderer.set(ShapeRenderer.ShapeType.Filled);
 

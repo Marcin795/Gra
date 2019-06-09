@@ -8,10 +8,10 @@ import java.util.ArrayList;
 public class Level implements Json.Serializable{
     ArrayList<ArrayList<Float>> lanes;
 
-    public Level() {
-        lanes = new ArrayList<ArrayList<Float>>();
+    Level() {
+        lanes = new ArrayList<>();
         for(int i = 0; i < 3; i++) {
-            lanes.add( new ArrayList<Float>());
+            lanes.add(new ArrayList<>());
         }
     }
 

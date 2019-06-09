@@ -1,6 +1,5 @@
 package com.mygdx.game;
 
-
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
@@ -12,41 +11,32 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.util.audio.PausablePlayer;
-import javazoom.jl.player.Player;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-
-import java.awt.*;
-import java.security.Key;
-import java.util.Arrays;
-import java.util.Hashtable;
 
 public class Game extends InputAdapter implements Screen {
     protected Gra gra;
-    protected SpriteBatch batch;
-    protected Viewport viewport;
-    Camera camera;
-    ShapeRenderer renderer;
-    Balls balls;
-    BallPaths ballPaths;
-    int score=0, best;
-    BitmapFont font;
-    Preferences prefs;
-    Json json;
-    PausablePlayer player;
-    Circles circles;
+    private SpriteBatch batch;
+    private Viewport viewport;
+    private Camera camera;
+    private ShapeRenderer renderer;
+    private Balls balls;
+    private BallPaths ballPaths;
+    private int score;
+    private BitmapFont font;
+    private Preferences prefs;
+    private PausablePlayer player;
+    private Circles circles;
 
+    private End end;
 
-    End end;
+    private String path;
 
-    String path;
-    public Game(Gra gra, String absolutePath){
+    Game(Gra gra, String absolutePath){
+        score = 0;
         this.gra = gra;
         this.path = absolutePath;
     }
@@ -70,7 +60,7 @@ public class Game extends InputAdapter implements Screen {
         viewport = new ExtendViewport(Constants.minWorldWidth,Constants.minWorldHeight,camera);
         font = new BitmapFont(Gdx.files.internal("czcionka2.fnt"));
         prefs = Gdx.app.getPreferences("ranking");
-        json = new Json();
+//        Json json = new Json();
         end = new End(gra);
         Gdx.input.setInputProcessor(this);
         balls = new Balls(viewport);
@@ -142,8 +132,8 @@ public class Game extends InputAdapter implements Screen {
         }
         batch.begin();
 
-        best=prefs.getInteger("best");
-        String napis1= "Score: "+score+"\n"+"Best: "+best;
+        int best = prefs.getInteger("best");
+        String napis1= "Score: "+score+"\n"+"Best: "+ best;
         font.setColor(Color.WHITE);
         font.draw(batch, napis1, 20, viewport.getWorldHeight() - 20,0,Align.left,false);
 

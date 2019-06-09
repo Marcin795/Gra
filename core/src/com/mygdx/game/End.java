@@ -1,35 +1,33 @@
 package com.mygdx.game;
-        import com.badlogic.gdx.Gdx;
-        import com.badlogic.gdx.InputAdapter;
-        import com.badlogic.gdx.Preferences;
-        import com.badlogic.gdx.Screen;
-        import com.badlogic.gdx.graphics.*;
-        import com.badlogic.gdx.graphics.g2d.BitmapFont;
-        import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-        import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-        import com.badlogic.gdx.math.Rectangle;
-        import com.badlogic.gdx.math.Vector2;
-        import com.badlogic.gdx.utils.Align;
-        import com.badlogic.gdx.utils.Json;
-        import com.badlogic.gdx.utils.viewport.ExtendViewport;
-        import com.badlogic.gdx.utils.viewport.ScreenViewport;
-        import com.badlogic.gdx.utils.viewport.Viewport;
 
-        import java.util.Arrays;
-        import java.util.Map;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
+
+import java.util.Arrays;
 
 public class End extends InputAdapter{
     protected Gra gra;
-    protected Viewport viewport;
-    BitmapFont font,font1;
-    Preferences prefs;
-    Texture end;
-    Json json;
-    int[] values;
-    boolean rank=true;
+    Viewport viewport;
+    private BitmapFont font,font1;
+    private Preferences prefs;
+    private Texture end;
+    private Json json;
+    private int[] values;
+    private boolean rank;
 
 
-    public End(Gra gra){
+    End(Gra gra){
+        rank = true;
         this.gra=gra;
         this.viewport = new ExtendViewport(Constants.minWorldWidth, Constants.minWorldHeight);
         font = new BitmapFont(Gdx.files.internal("czcionka2.fnt"));
@@ -41,7 +39,8 @@ public class End extends InputAdapter{
 
 
     }
-    public void render(SpriteBatch batch) {
+
+    void render(SpriteBatch batch) {
 
         viewport.apply();
         batch.setProjectionMatrix(viewport.getCamera().combined);
@@ -56,7 +55,8 @@ public class End extends InputAdapter{
         batch.end();
 
     }
-    public void render(ShapeRenderer renderer) {
+
+    void render(ShapeRenderer renderer) {
 
         viewport.apply();
         renderer.setProjectionMatrix(viewport.getCamera().combined);
@@ -70,7 +70,8 @@ public class End extends InputAdapter{
 
 
     }
-    public void addScore(){
+
+    void addScore(){
 
         if(rank) {
             Gdx.app.log("End","tak");
@@ -83,7 +84,7 @@ public class End extends InputAdapter{
 
             values = addElement(values, prefs.getInteger("score"));
 
-            Gdx.app.log("Game", values + "");
+            Gdx.app.log("Game", Arrays.toString(values));
             prefs.putString("values", json.toJson(values));
 
 
@@ -95,7 +96,7 @@ public class End extends InputAdapter{
             rank=false;
         }
     }
-    static int[] addElement(int[] a, int e) {
+    private static int[] addElement(int[] a, int e) {
         a  = Arrays.copyOf(a, a.length + 1);
         a[a.length - 1] = e;
         return a;

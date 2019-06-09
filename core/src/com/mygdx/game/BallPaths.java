@@ -6,16 +6,16 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.ArrayList;
 
-public class BallPaths {
+class BallPaths {
 
-    ArrayList<Float> positions;
-    Viewport viewport;
+    private ArrayList<Float> positions;
+    private Viewport viewport;
 
-    public BallPaths(Viewport viewport) {
+    BallPaths(Viewport viewport) {
         this.viewport = viewport;
     }
 
-    public void render(ShapeRenderer renderer) {
+    void render(ShapeRenderer renderer) {
         renderer.setColor(Color.FOREST);
         renderer.set(ShapeRenderer.ShapeType.Filled);
         for(Float p : positions) {
@@ -23,8 +23,8 @@ public class BallPaths {
         }
     }
 
-    public void init() {
-        positions = new ArrayList<Float>();
+    void init() {
+        positions = new ArrayList<>();
         positions.add(viewport.getWorldWidth()/2);
         positions.add(viewport.getWorldWidth()/2 - Constants.WIDTH - Constants.SPACE);
         positions.add(viewport.getWorldWidth()/2 + Constants.WIDTH + Constants.SPACE);

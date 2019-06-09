@@ -113,7 +113,7 @@ public class WaveDecoder implements com.mygdx.game.util.audio.io.Decoder
 		return readSamples; 
 	}
 	
-	public static void main( String[] args ) throws FileNotFoundException, Exception
+	public static void main( String[] args ) throws Exception
 	{
 		WaveDecoder decoder = new WaveDecoder( new FileInputStream( "samples/sample.wav" ) );
 		float[] samples = new float[1024];

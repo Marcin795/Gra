@@ -2,30 +2,26 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.viewport.Viewport;
 
 import static com.mygdx.game.Constants.BALL_SPEED;
 
-public class Ball {
+class Ball {
 
     Vector2 position;
-    Vector2 velocity;
-    Viewport viewport;
-    long spawnTime;
-    boolean click=false;
+    private Vector2 velocity;
+    boolean click;
 
-    public Ball(Vector2 position, Viewport viewport) {
+    Ball(Vector2 position) {
+        click = false;
         this.position = position;
-        this.viewport = viewport;
         this.velocity = new Vector2(0, -BALL_SPEED);
-        spawnTime = System.nanoTime();
     }
 
-    public void update(float delta) {
+    void update(float delta) {
         position.mulAdd(velocity, delta);
     }
 
-    public void render(ShapeRenderer renderer) {
+    void render(ShapeRenderer renderer) {
         renderer.circle(position.x, position.y, 25);
     }
 

@@ -5,8 +5,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.*;
-import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -16,23 +20,20 @@ import net.spookygames.gdx.nativefilechooser.NativeFileChooser;
 import net.spookygames.gdx.nativefilechooser.NativeFileChooserCallback;
 import net.spookygames.gdx.nativefilechooser.NativeFileChooserConfiguration;
 
-import java.io.File;
-import java.io.FilenameFilter;
-
 
 public class Menu extends InputAdapter implements Screen {
     private final NativeFileChooser fileChooser;
     protected Gra gra;
-    protected SpriteBatch batch;
-    protected ExtendViewport viewport;
-    Camera camera;
-    ShapeRenderer renderer;
-    BitmapFont font;
-    Texture play,play1,ranking,ranking1;
+    private SpriteBatch batch;
+    private ExtendViewport viewport;
+    private Camera camera;
+    private ShapeRenderer renderer;
+    private BitmapFont font;
+    private Texture play, ranking;
 
-    String path;
+    private String path;
 
-    public Menu(Gra gra, NativeFileChooser fileChooser){
+    Menu(Gra gra, NativeFileChooser fileChooser){
         this.gra=gra;
         this.fileChooser = fileChooser;
     }
@@ -44,9 +45,7 @@ public class Menu extends InputAdapter implements Screen {
         camera = new OrthographicCamera();
         viewport= new ExtendViewport(Constants.minWorldWidth,Constants.minWorldHeight,camera);
         play= new Texture("pl.png");
-        //play1= new Texture("play_1a.png");
         ranking = new Texture("rank.png");
-        //ranking1 = new Texture("ranking_1a.png");
         font = new BitmapFont();
         font.getData().setScale(2);
         font.getRegion().getTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
@@ -64,22 +63,6 @@ public class Menu extends InputAdapter implements Screen {
         renderer.setProjectionMatrix(viewport.getCamera().combined);
 
         batch.begin();
-        /*if(Gdx.input.getX()<Gdx.graphics.getWidth()*2/3&&Gdx.input.getX()>Gdx.graphics.getWidth()/3&&
-                Gdx.input.getY()<Gdx.graphics.getHeight()*2/6&&Gdx.input.getY()>Gdx.graphics.getHeight()/6){
-                batch.draw(play1,Constants.START_W.x/Constants.MENU_SIZE*viewport.getWorldWidth()-Constants.SZER/2,Constants.START_W.y/Constants.MENU_SIZE*viewport.getWorldHeight(),Constants.SZER,Constants.WYS);
-       }
-        else{
-            batch.draw(play,Constants.START_W.x/Constants.MENU_SIZE*viewport.getWorldWidth()-Constants.SZER/2,Constants.START_W.y/Constants.MENU_SIZE*viewport.getWorldHeight(),Constants.SZER,Constants.WYS);
-        }
-        if(Gdx.input.getX()<Gdx.graphics.getWidth()*2/3&&Gdx.input.getX()>Gdx.graphics.getWidth()/3&&
-                Gdx.input.getY()<Gdx.graphics.getHeight()*5/6&&Gdx.input.getY()>Gdx.graphics.getHeight()*3/6){
-            batch.draw(ranking1,Constants.RANKING_W.x/Constants.MENU_SIZE*viewport.getWorldWidth()-Constants.SZER/2,Constants.RANKING_W.y/Constants.MENU_SIZE*viewport.getWorldHeight(),Constants.SZER,Constants.WYS);
-       }
-        else{
-            batch.draw(ranking,Constants.RANKING_W.x/Constants.MENU_SIZE*viewport.getWorldWidth()-Constants.SZER/2,Constants.RANKING_W.y/Constants.MENU_SIZE*viewport.getWorldHeight(),Constants.SZER,Constants.WYS);
-
-        }
-        */
         batch.draw(play,Constants.START_W.x/Constants.MENU_SIZE*viewport.getWorldWidth()-Constants.SZER/2,Constants.START_W.y/Constants.MENU_SIZE*viewport.getWorldHeight(),Constants.SZER,Constants.WYS);
         batch.draw(ranking,Constants.RANKING_W.x/Constants.MENU_SIZE*viewport.getWorldWidth()-Constants.SZER/2,Constants.RANKING_W.y/Constants.MENU_SIZE*viewport.getWorldHeight(),Constants.SZER,Constants.WYS);
 
@@ -128,9 +111,6 @@ public class Menu extends InputAdapter implements Screen {
                 Constants.SZER,
                 Constants.WYS);
         if(startRect.contains(worldTouch)) {
-            Gdx.app.log("Menu", "asdf");
-//            gra.showChoiceScreen();
-//            gra.showGameScreen("E:\\Java\\lullaby.mp3");
             chooseFile();
             generateTrack(path);
             gra.showGameScreen(path);
@@ -144,21 +124,19 @@ public class Menu extends InputAdapter implements Screen {
         }
 
         return true;
-
-
     }
 
-    public void chooseFile() {
+    private void chooseFile() {
 
         NativeFileChooserConfiguration conf = new NativeFileChooserConfiguration();
         conf.directory = Gdx.files.absolute(System.getProperty("user.home"));
         conf.mimeFilter = "audio/*";
-        conf.nameFilter = new FilenameFilter() {
-            @Override
-            public boolean accept(File dir, String name) {
-                return name.endsWith("mp3");
-            }
-        };
+//        conf.nameFilter = new FilenameFilter() {
+//            @Override
+//            public boolean accept(File dir, String name) {
+//                return name.endsWith("mp3");
+//            }
+//        };
         conf.title = "Choose audio file";
         fileChooser.chooseFile(conf, new NativeFileChooserCallback() {
             @Override
@@ -184,7 +162,7 @@ public class Menu extends InputAdapter implements Screen {
         });
     }
 
-    public void generateTrack(String path) {
+    private void generateTrack(String path) {
         Test test = new Test(path);
         try {
             test.test();
