@@ -182,12 +182,7 @@ public class Game extends InputAdapter implements Screen {
     }
 
     /**
-     * Nalicza punkty, po kliknieciu jednego z trzech dolnych kolek w odpowiednim momencie. Gdy gra jest skonczona, wraca do ekranu startowego po kliknieciu przycisku "BACK".
-     * @param screenX wspolrzedna x
-     * @param screenY wspolrzedna y
-     * @param pointer
-     * @param button
-     * @return
+     * Obsluguje klikniecia myszy. Nalicza punkty, po kliknieciu jednego z trzech dolnych kolek w odpowiednim momencie. Gdy gra jest skonczona, wraca do ekranu startowego po kliknieciu przycisku "BACK".
      */
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         Vector2 worldTouch = viewport.unproject(new Vector2(screenX, screenY));

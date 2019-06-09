@@ -169,7 +169,7 @@ public class Menu extends InputAdapter implements Screen {
 
     /**
      * Metoda generująca trasę lecących kulek.
-     * @param path
+     * @param path sciezka pliku muzycznego
      */
     private void generateTrack(String path) {
         Test test = new Test(path);

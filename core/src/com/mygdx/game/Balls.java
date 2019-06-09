@@ -104,6 +104,12 @@ class Balls {
         }
     }
 
+    /**
+     * Tworzy nowa kulke i zapisuja ja do jednej z 3 list
+     * @param x wspolrzedna x kulki
+     * @param y wspolrzedna y kulki
+     * @param ballsList lista kulek
+     */
 
     private void add(float x, float y, DelayedRemovalArray<Ball> ballsList) {
         ballsList.add(new Ball(new Vector2(x, y+25)));

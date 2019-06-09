@@ -100,12 +100,12 @@ public class End extends InputAdapter{
     }
 
     /**
-     * Dodaje element e do tablicy a
+     * Dodaje uzyskany wynik do tablicy a
      * @param a tablica
-     * @param e element
-     * @return tablica z dodanym elementem
+     * @param e wynik
+     * @return tablica z dodanym wynikiem
      */
-    private static int[] addElement(int[] a, int e) {
+    int[] addElement(int[] a, int e) {
         a  = Arrays.copyOf(a, a.length + 1);
         a[a.length - 1] = e;
         return a;
